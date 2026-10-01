@@ -2,6 +2,12 @@
 
 Newest first. Facts that the code and `CONTEXT.md` do not already record.
 
+## 2026-10-01 — Error sanitizing and CI shipped to stage
+
+- `e71d0a6`: routes return `publicErrorMessage(err, fallback)` (lib/db.ts) instead of raw PostgREST text; `GoTrueError` in lib/gotrue.ts. docs/05 findings #1 and #11 are closed.
+- `8f2eda3`: `.github/workflows/ci.yml` runs all three test tiers on push/PR to `stage` and `main`. First run is green (about 51 s checks, 2 m 46 s real stack). Pushing workflow files needs the gh token's `workflow` scope, which was added on this date.
+- The owner merges through a "Stage ---> Main" PR (#7 at this time).
+
 ## 2026-10-01 — Running the full stack locally on Windows
 
 - Node is now **24.19.0** (`OpenJS.NodeJS.LTS`); Node 22 was replaced. All tiers pass on Windows: unit 90/90, system 105/105, real 35/35. Commit `7d4f1fe` on `stage` made the system runners Windows-safe and made Tier 3 clear `signup:`/`login:` rate-limit rows before each signup/login (otherwise the 7th signup returns 429 and the runner crashes).
