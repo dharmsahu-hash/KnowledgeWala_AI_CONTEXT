@@ -2,6 +2,14 @@
 
 Newest first. Decisions not yet recorded in code (there is no code yet).
 
+## 2026-10-01 — Sprint 1 built and pushed to stage
+
+- Repo: github.com/dharmsahu-hash/pcdoctor (private). `main` = initial commit; `stage` = sprint 1 (commit 3ffe664).
+- Works: Dashboard (live tiles, drives, biggest programs), Slow or hot? (advisor findings), Settings (privacy/about). Verified by running the app on the owner's PC.
+- Toolchain on this PC: Rust 1.98.1 (stable-msvc) and VS 2022 Build Tools C++; `sysinfo` 0.37 API compiles as written.
+- GitHub CLI token lacks the `workflow` scope, so `.github/workflows/ci.yml` stays local (listed in `.git/info/exclude`) until the owner runs `gh auth refresh -s workflow`; then remove the exclude line and commit it.
+- Next (sprint 2): SQLite database + 5-minute sampler, history charts (ECharts), Free up space, Duplicates (delete-one), Apps advisor.
+
 ## 2026-10-01 — Product and technical decisions
 
 - Spec: "PCDoctor by KnowledgeWala — BRD & Design", a Claude doc with two tabs (Overview for non-technical readers, Technical design for developers): https://claude.ai/code/artifact/46ba2c71-b421-42c9-a1aa-2b617e3684bc
