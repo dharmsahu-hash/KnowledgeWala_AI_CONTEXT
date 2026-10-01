@@ -15,6 +15,7 @@ Shared memory for AI coding agents (Claude Code, Cursor, and others) that work o
 | Project | Repo | Production |
 |---|---|---|
 | TeacherCircle | https://github.com/dharmsahu-hash/teachercircle | https://teachercircle.vercel.app |
+| KnowledgeWala Exam | not yet created (local: `repos\knowledgewala-exam`) | not deployed (G2 design stage) |
 
 ## Keeping it in sync
 
