@@ -2,6 +2,13 @@
 
 Newest first. Facts that the code and `CONTEXT.md` do not already record.
 
+## 2026-10-02 — #2/#3 shipped to stage; production deploy order
+
+- `11db050`: teaching mode, classes, boards, exams (migration **0027**) plus `/tutors/online`, `/tutors/exam/<exam>[/<subject>]` and `/tutors/<city>/<subject>/class-<n>`. `14e071e`: readability (Inter font, darker `--muted`, minimum 13px).
+- **Before merging stage to main, apply `0026` and then `0027` to production Supabase, then `NOTIFY pgrst, 'reload schema';`.** The search and directory code selects the 0027 columns, so without it /search errors and the directory pages come back empty.
+- AdSense (`ca-pub-1900408712967344`) is already live through `NEXT_PUBLIC_ADSENSE_CLIENT_ID` (`components/AdSense.tsx`, `/ads.txt`). Don't add the tag by hand; it would load twice.
+- Next on the roadmap: #1 "I need a tutor" posts (signed-in posters only, 60-day expiry).
+
 ## 2026-10-02 — Growth feature roadmap (owner decisions)
 
 Owner's six growth ideas, with build order decided as "quick wins first":
