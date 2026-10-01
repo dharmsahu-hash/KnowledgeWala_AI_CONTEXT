@@ -2,6 +2,14 @@
 
 Newest first. Facts that the code and `CONTEXT.md` do not already record.
 
+## 2026-10-01 — Running the full stack locally on Windows
+
+- Node is now **24.19.0** (`OpenJS.NodeJS.LTS`); Node 22 was replaced. All tiers pass on Windows: unit 90/90, system 105/105, real 35/35. Commit `7d4f1fe` on `stage` made the system runners Windows-safe and made Tier 3 clear `signup:`/`login:` rate-limit rows before each signup/login (otherwise the 7th signup returns 429 and the runner crashes).
+- Branch flow: work is pushed to `stage`; the owner merges `stage` → `main` manually. Vercel builds a preview for every `stage` push (GitHub status context `Vercel`).
+- Docker Desktop here is 20.10.11 with Compose 2.2.1, which rejects the top-level `name:` in `docker-compose.yml`. Workaround, kept out of git through `.git/info/exclude`: `docker-compose.local.yml` = the same file without `name:`. Export `COMPOSE_FILE=docker-compose.local.yml COMPOSE_PROJECT_NAME=teachercircle` so `db/*.sh` and `test:system:real` use it. Updating Docker Desktop removes the need for this.
+- `quay.io/minio/minio` now returns "unauthorized" (no longer publicly pullable). MinIO is unused, so start the services explicitly: `docker compose up -d --build postgres postgrest gotrue meilisearch redis app`.
+- Local `.env` has generated secrets and is gitignored. The compose Postgres image is `supabase/postgres:15.8.1.060`, not `postgres:16-alpine` as `CONTEXT.md` says.
+
 ## 2026-10-01 — Windows workstation setup
 
 - Owner's GitHub account: `dharmsahu-hash`. The GitHub CLI is installed at `C:\Program Files\GitHub CLI\gh.exe` and signed in with `repo` scope. Git uses it as its credential helper.
