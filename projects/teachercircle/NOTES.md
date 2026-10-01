@@ -2,6 +2,15 @@
 
 Newest first. Facts that the code and `CONTEXT.md` do not already record.
 
+## 2026-10-01 — Claim listing, blog, validation, health check on stage
+
+- `a5f4876` claim listing (migration **0026**), `ffc1498` blog (G6), `28486e6` zod validation, `55fc172` CI postgres-start fix, `88e30a9` `/api/health`. Totals: unit 125, system 118, real 48.
+- **Production still needs `db/migrations/0026_claim_listing.sql` applied to Supabase** (SQL editor or psql, as in docs/03 Step 2), then `NOTIFY pgrst, 'reload schema';`. Until then the app works but nothing gets claimed, and the admin pages simply show no "Not claimed yet" labels (that RPC call is best effort).
+- `db/run-migrations.sh` is not actually safe to re-run: `0001` fails with `relation "users" already exists`, so on an existing local DB apply new migrations by hand. Fresh databases (CI) are fine.
+- CI flake (fixed in `55fc172`): on first boot, supabase/postgres can exit once ("Peer authentication failed" in its init psql) and restart. CI now starts postgres alone and waits for it.
+- Blog articles: `content/blog/*.ts` + `content/blog/index.ts`. The owner should review the three starter articles' wording.
+- Point an uptime monitor at `https://teachercircle.vercel.app/api/health` (200 ok / 503 degraded).
+
 ## 2026-10-01 — Error sanitizing and CI shipped to stage
 
 - `e71d0a6`: routes return `publicErrorMessage(err, fallback)` (lib/db.ts) instead of raw PostgREST text; `GoTrueError` in lib/gotrue.ts. docs/05 findings #1 and #11 are closed.
