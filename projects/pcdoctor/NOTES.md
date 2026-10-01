@@ -7,7 +7,8 @@ Newest first. Decisions not yet recorded in code (there is no code yet).
 - Repo: github.com/dharmsahu-hash/pcdoctor (private). `main` = initial commit; `stage` = sprint 1 (commit 3ffe664).
 - Works: Dashboard (live tiles, drives, biggest programs), Slow or hot? (advisor findings), Settings (privacy/about). Verified by running the app on the owner's PC.
 - Toolchain on this PC: Rust 1.98.1 (stable-msvc) and VS 2022 Build Tools C++; `sysinfo` 0.37 API compiles as written.
-- GitHub CLI token lacks the `workflow` scope, so `.github/workflows/ci.yml` stays local (listed in `.git/info/exclude`) until the owner runs `gh auth refresh -s workflow`; then remove the exclude line and commit it.
+- Commit `8ac92eb`: 38 Rust + 15 screen tests, INSTALL.md (customer, click-only), SETUP.md (developer), and the CI workflow (the gh token has had the `workflow` scope since 2026-10-01).
+- Customer install = one file: `src-tauri\target\release\bundle\nsis\PCDoctor_0.1.0_x64-setup.exe` from `npm run tauri build` (1.4 MB). It is a per-user NSIS installer with no admin prompt. Verified: silent install (`/S`) → Start menu entry → app opens (34 MB memory) → silent uninstall leaves nothing registered. Until it is code-signed, SmartScreen shows "More info → Run anyway"; the owner wants setup kept click-only and simple (no over-engineering).
 - Next (sprint 2): SQLite database + 5-minute sampler, history charts (ECharts), Free up space, Duplicates (delete-one), Apps advisor.
 
 ## 2026-10-01 — Product and technical decisions
