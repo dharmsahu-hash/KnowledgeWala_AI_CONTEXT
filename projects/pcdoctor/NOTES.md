@@ -2,6 +2,18 @@
 
 Newest first. Decisions not yet recorded in code (there is no code yet).
 
+## 2026-10-02 — Sprint 2 on stage
+
+- Commits on `stage`: `bdb5633` Free up space, `ed0fcaa` Duplicates, `ee45ba9` Apps advisor, `2fe18fe` history charts + docs. Tests: 77 Rust (+3 ignored real-PC checks), 39 screen.
+- Design choices that matter later:
+  - Free up space rescans categories inside `clean`, so the UI only sends category ids, never paths.
+  - Duplicates delete re-hashes (BLAKE3) each chosen copy and deletes only if it still matches a kept copy. The last copy, a changed file, or a stranger path is impossible to delete.
+  - "Spare place" folders (Downloads/Desktop/Temp) are judged only below the searched folder's parent. The first version matched `\Temp\` anywhere and broke on paths under `AppData\Local\Temp`.
+  - Apps advisor never uninstalls. `open_settings` accepts only `apps` and `startup` (`ms-settings:` pages). Verdicts live in `resources/app_advice.json`.
+  - History: SQLite at `%LOCALAPPDATA%\com.knowledgewala.pcdoctor\pcdoctor.db`, a reading every 5 minutes while the app is open (no tray process yet), kept 90 days, about 240 points per chart.
+- Real-PC check (read-only, `cargo test real_pc -- --ignored --nocapture`) on the owner's laptop: 55 apps / 11 startup items; 1,005 files and 16 duplicate groups found in 1.4 s; little left to clean after the 2026-10-01 cleanup.
+- Tests must not use a fake drive like `Z:\` for "missing folder": Windows spent about 6 minutes timing out. Use a missing subfolder of a tempdir.
+
 ## 2026-10-01 — Sprint 1 built and pushed to stage
 
 - Repo: github.com/dharmsahu-hash/pcdoctor (private). `main` = initial commit; `stage` = sprint 1 (commit 3ffe664).
