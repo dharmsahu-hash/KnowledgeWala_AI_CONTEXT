@@ -2,6 +2,15 @@
 
 Newest first. Facts that the code and `CONTEXT.md` do not already record.
 
+## 2026-10-02 — Growth feature roadmap (owner decisions)
+
+Owner's six growth ideas, with build order decided as "quick wins first":
+1. #5 invite on empty results, #6 fee/availability line on city pages, #4 WhatsApp inquiry: **shipped to stage in `ea9ad97`.** WhatsApp chat links are shown only after Connect, because teacher phone numbers are private.
+2. Next: #2 online as a listing (`teaching_mode` home/online/both, `/tutors/online/[subject]`) together with #3 class/board/exam fields. Use a **fixed vocabulary**, not free text, so landing-page slugs stay clean, and publish a page only when at least one real teacher matches. One migration for both.
+3. Last: #1 "I need a tutor" posts. Decisions: **signed-in users only** may post; teachers reply through in-app messages; posts **expire after 60 days** (the poster can close one earlier), and expired posts leave the sitemap. Never show the poster's contact details publicly. Needs profanity filter, rate limit and admin removal.
+
+Other changes on 2026-10-02: confirmation-email fix (`ea13d17`: resend endpoint, redirect-host logging, docs/03 Step 4b). Root cause of "email links to localhost" is the Supabase Site URL / Redirect URLs setting, which the owner must fix in the dashboard. Header/footer redesign in `a3af2cd`.
+
 ## 2026-10-01 — Claim listing, blog, validation, health check on stage
 
 - `a5f4876` claim listing (migration **0026**), `ffc1498` blog (G6), `28486e6` zod validation, `55fc172` CI postgres-start fix, `88e30a9` `/api/health`. Totals: unit 125, system 118, real 48.
