@@ -2,6 +2,15 @@
 
 Newest first. Decisions not yet recorded in code (there is no code yet).
 
+## 2026-10-03 — 0.4.1: Ask focus fix, hardware and live readings for the AI, readability (stage e74fbc5)
+
+- Ask box focus: a `disabled` input loses focus for good, so the box stays enabled; only Ask is blocked while an answer streams, and the box is refocused after each answer.
+- Hardware details come from one hidden PowerShell CIM script (`health/hardware.rs`). The CIM classes take about 1 s in total; `Get-PhysicalDisk` and `Get-NetAdapter` took about 8 s, so they are avoided. On this laptop: 2 × 16 GB DDR4, a firmware maximum of 64 GB in 4 slots, a Samsung 1 TB NVMe SSD, no NPU, Wi-Fi at 192.168.1.5. `BatteryStaticData.DesignedCapacity` needs admin, so battery health cannot be computed.
+- Live readings go in the user message ("Measured just now: …"), not the system message, so the system prompt and history stay identical and llama.cpp reuses the cached prompt. First words now arrive in about 2 s, including about 0.5 s of measuring.
+- Qwen3.5 4B linked "how to remove it" to memory-heavy programs and suggested uninstalling Chrome or Cursor. A prompt rule alone did not fix it; a concrete "To free memory, close programs and tabs…" line in the notes did.
+- Python heredocs keep mangling `
+`, `\` and quote marks inside Rust strings. Use the Edit tool for those lines.
+
 ## 2026-10-02 — Sprint 4 (0.4.0): Activity + Undo, Dashboard reports, CI safety (stage fd31580)
 
 - Undo: `trash::os_limited::list()` reports Explorer's display name, which drops the extension when Windows hides extensions. `restore_all` then restores under that name, so "report.pdf" came back as "report". Matching therefore accepts the name with or without the extension, and restored files are renamed to the logged path. Tested against the real bin (`undo_with_the_real_recycle_bin`, ignored test). The first failed runs left four 18-byte "pcdoctor-undo-test" items in the owner's Recycle Bin; they are harmless.
