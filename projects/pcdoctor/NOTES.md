@@ -2,6 +2,18 @@
 
 Newest first. Decisions not yet recorded in code (there is no code yet).
 
+## 2026-10-02 — Sprint 3 on stage
+
+- Commits: `dd15509` My Library, `31c71a0` built-in AI + Ask screen + Delete everything saved. Tests: 100 Rust (+5 ignored real-PC checks), 59 screen.
+- **AI engine:** llama.cpp **b11342** CPU x64 zip (19,274,166 bytes, sha256 `cc6f3ac9…acd8d`). **Model:** `lmstudio-community/Qwen3.5-4B-GGUF` Q4_K_M (2,707,513,696 bytes, sha256 `25082a7d…1418c`, Apache 2.0). Both are pinned in `ai.rs`.
+  - Foundry Local is NOT used yet: its redistribution terms are still unconfirmed.
+  - llama.cpp's "latest release" on GitHub is a dummy `v0.5.0` holding only `nightly-tag.txt`; the real builds are tagged `b#####`.
+  - In reqwest 0.13 the TLS feature is `rustls` (not `rustls-tls`).
+- AI runtime: `llama-server.exe -m model.gguf --host 127.0.0.1 --port <free> -c 8192 -t <cores/2> --api-key <session key>`, started with CREATE_NO_WINDOW. `chat_template_kwargs.enable_thinking=false`, then `<think>` and markdown are stripped. On the owner's laptop answers take 14–25 s; the download took about 8 minutes.
+- Files: `%LOCALAPPDATA%\com.knowledgewala.pcdoctor\ai\{llama\, model.gguf, switched-off}`. The owner's laptop already has the AI downloaded (it was used by the end-to-end test).
+- My Library: user folders via `dirs` (Windows known folders; the owner's Documents, Desktop and Pictures are under OneDrive) plus non-system fixed drives. It lists 28,637 files in about 6 s. Duplicates skips OneDrive online-only files (attributes RECALL_ON_OPEN, RECALL_ON_DATA_ACCESS, OFFLINE) so nothing is downloaded.
+- Not built yet (later): Foundry Local, a background tray sampler, the update check, AI tool-calling and sentence-to-collection rules, live file watching (the library uses a 6-hour rescan instead).
+
 ## 2026-10-02 — Sprint 2 on stage
 
 - Commits on `stage`: `bdb5633` Free up space, `ed0fcaa` Duplicates, `ee45ba9` Apps advisor, `2fe18fe` history charts + docs. Tests: 77 Rust (+3 ignored real-PC checks), 39 screen.
