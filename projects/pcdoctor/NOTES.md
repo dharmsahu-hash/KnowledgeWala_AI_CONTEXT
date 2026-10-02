@@ -2,6 +2,15 @@
 
 Newest first. Decisions not yet recorded in code (there is no code yet).
 
+## 2026-10-02 — 0.2.0: About screen and safe updates (stage b27a5e9)
+
+- Updates: customers run the new installer over the old one. The app lives in `%LOCALAPPDATA%\PCDoctor` and the data in `%LOCALAPPDATA%\com.knowledgewala.pcdoctor`. Tauri's NSIS installer deletes data only on uninstall with "Delete the application data" ticked, and never with /UPDATE.
+- Risk found: on an upgrade the installer's default choice is "Uninstall before installing", which runs the old uninstaller and shows that tick box. `src-tauri/windows/hooks.nsh` (NSIS_HOOK_PREUNINSTALL) ignores the tick when the uninstaller was launched by an installer (`_?=` is in $CMDLINE; checked with a test NSIS build). This only protects updates from 0.2.0 onwards.
+- Verified: a silent install of 0.1.0 then 0.2.0 left all 435 data files unchanged.
+- Release rules: bump the version in package.json, tauri.conf.json and Cargo.toml; database changes must be additive; never change `identifier` or `productName`.
+- The About screen renders PRIVACY.md, EULA.md, LICENSE and THIRD_PARTY.md (Vite `?raw` + a tiny renderer in `src/lib/markdown.tsx`); the version comes from package.json via `__APP_VERSION__`.
+- Still open: the EULA is a draft (governing law), the privacy contact email is missing, and there is no auto-update (planned as an opt-in check later).
+
 ## 2026-10-02 — AI speed, grounding and memory (stage fd3dff1)
 
 - Slowness was prompt reading: about 900 tokens at about 42 tokens/s on the processor, plus 6.7 tokens/s writing. Fixes: prime the engine (system + facts + history) when the Ask screen opens, use `cache_prompt` so llama.cpp reuses that prefix, cache the facts for 10 minutes, stream with SSE through a Tauri `ipc::Channel`, and set `chat_template_kwargs.enable_thinking=false` for Qwen3.5.
