@@ -6,7 +6,7 @@ Newest first. Decisions not yet recorded in code (there is no code yet).
 
 - Public repo **dharmsahu-hash/pcdoctor-releases** (created with the owner's OK) holds installers and release notes only; the source repo stays private. Its README is the customer download page.
 - `update.rs` asks `api.github.com/repos/dharmsahu-hash/pcdoctor-releases/releases/latest`. It is off by default. Once switched on it checks at most once a day when the app opens, and Settings > Check now can check at any time. The request uses a fixed host, no redirects and the user agent `PCDoctor/<version>`; a 404 means nothing is published yet. The app never downloads an update itself: Download opens the releases page in the browser.
-- To publish a release, make the tag the version (`v0.3.0`), attach the setup .exe and write short plain notes, whose first lines show in the app. Drafts and pre-releases are ignored. No release has been published yet; the owner publishes them.
+- To publish a release, make the tag the version (`v0.3.0`), attach the setup .exe and write short plain notes, whose first lines show in the app. Drafts and pre-releases are ignored. First release, v0.3.0, was published on 2026-10-02 from stage dcfd1ca (installer SHA-256 e2848a08…a68f3, checked against the public download).
 - The setting and the last answer are kept in `update.json` next to the database.
 
 ## 2026-10-02 — 0.2.1: smarter AI answers (stage 013cd9a)
