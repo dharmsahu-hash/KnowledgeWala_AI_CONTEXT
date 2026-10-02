@@ -2,6 +2,12 @@
 
 Newest first. Facts that the code and `CONTEXT.md` do not already record.
 
+## 2026-10-02 — Competitor research and growth roadmap v2 (owner asked for features that bring users back)
+
+Compared UrbanPro, Superprof, Preply, Wyzant, Doubtnut/Vedantu, Testbook. Findings: UrbanPro is pay-to-contact (coins) and tutors report many fake/unresponsive leads (user-reported on review sites); Superprof is free for tutors, pushes a free first lesson and a Super Tutor badge; Wyzant ranks by profile completeness + response rate + review count; Doubtnut wins daily habit with free doubt solving (most users outside the top 10 cities); Testbook/SATHEE use free mocks and exam countdowns; WhatsApp is the main channel for tutors and parents in India, and word of mouth is how most tutors get students. Our wedge: free for everyone, no coins, signed-in requests only.
+
+Proposed order: (1) email alerts (teachers on matching requests, parents on replies / new teachers for a saved search), (2) free demo class badge + filter, (3) shareable teacher profile card + QR + OG image, (4) profile completeness + response badges + weekly stats email. Then: free Ask-a-doubt Q&A answered by listed teachers, exam resources hub with countdown, collect reviews from a teacher's existing students, referral rewards (Featured boost), verified badge (qualification + phone). Later: PWA + push, Hindi, tutor CRM. Not started; awaiting owner's pick.
+
 ## 2026-10-02 — #1 "I need a tutor" posts shipped to stage; outage fix
 
 - `65a82c4` (migration **0028**): `/tutor-requests`, `/tutor-requests/new`, `/tutor-requests/<slug>-<id>`, `/admin/requests`. Owner decisions held: signed-in poster only, 60-day expiry, replies via in-app messages, no public contact details. **Apply `0028` to production Supabase** (then `NOTIFY pgrst, 'reload schema';`). Until then the pages show "being set up".
