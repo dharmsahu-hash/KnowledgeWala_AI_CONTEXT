@@ -2,6 +2,14 @@
 
 Newest first. Decisions not yet recorded in code (there is no code yet).
 
+## 2026-10-02 — AI speed, grounding and memory (stage fd3dff1)
+
+- Slowness was prompt reading: about 900 tokens at about 42 tokens/s on the processor, plus 6.7 tokens/s writing. Fixes: prime the engine (system + facts + history) when the Ask screen opens, use `cache_prompt` so llama.cpp reuses that prefix, cache the facts for 10 minutes, stream with SSE through a Tauri `ipc::Channel`, and set `chat_template_kwargs.enable_thinking=false` for Qwen3.5.
+- Graphics card: the llama.cpp b11342 Vulkan build (33 MB, pinned SHA-256) goes in `ai\llama-gpu`. The card is found in the registry display class; the GPU comes from `--list-devices` (free MiB at least 3100) and is used with `--device VulkanN -ngl 99`. If it fails it falls back to the processor. GTX 1650: first words in 0.4–1 s, answers in 3.5–5.5 s, load in 5–10 s.
+- Grounding: the 4B model invented "Open Settings" and "right-click, Stop". Fixed by adding a "How to act" line to the facts with the exact clicks (Apps, then Open Startup apps or Open Installed apps, then the three dots and Uninstall in Windows), separate "remove" and "update" app lists, and saying in the prompt that PCDoctor's Settings is not for apps. `ai_end_to_end_on_this_pc` asserts that no invented steps appear.
+- Memory: `ai\conversation.json` keeps the last 100 messages, and the last 6 turns go into the prompt. `ai\pc-context.md` holds the facts the AI last saw. Both are private-filtered and cleared by Clear conversation or Delete everything.
+- Test automation of the real window: posting clicks to the `Chrome_RenderWidgetHostHWND` child works even when PCDoctor is behind other windows; WindowFromPoint and UIA do not.
+
 ## 2026-10-02 — Sprint 3 on stage
 
 - Commits: `dd15509` My Library, `31c71a0` built-in AI + Ask screen + Delete everything saved. Tests: 100 Rust (+5 ignored real-PC checks), 59 screen.
