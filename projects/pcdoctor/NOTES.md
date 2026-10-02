@@ -2,6 +2,17 @@
 
 Newest first. Decisions not yet recorded in code (there is no code yet).
 
+## 2026-10-02 — Sprint 4 (0.4.0): Activity + Undo, Dashboard reports, CI safety (stage fd31580)
+
+- Undo: `trash::os_limited::list()` reports Explorer's display name, which drops the extension when Windows hides extensions. `restore_all` then restores under that name, so "report.pdf" came back as "report". Matching therefore accepts the name with or without the extension, and restored files are renamed to the logged path. Tested against the real bin (`undo_with_the_real_recycle_bin`, ignored test). The first failed runs left four 18-byte "pcdoctor-undo-test" items in the owner's Recycle Bin; they are harmless.
+- Crash report: `wevtutil qe Application` events 1000 and 1002 must also be filtered by provider ("Application Error" / "Application Hang"). On the owner's PC the Codex sandbox service logs its own events under the same ids. Unexpected shutdowns are Kernel-Power 41; there were 4 in the last 30 days on this laptop.
+- The drive-full projection needs at least 2 days and 6 readings, so it appears about two days after install.
+- `network_guard.rs` ignores code inside `#[cfg(test)]` blocks, using brace counting, so code after a test module is still checked. Checked by planting a leak. A new network feature must be added to `NETWORK_FILES`.
+- CI also runs `npm audit --audit-level=high` and `cargo audit`. cargo audit reports only 2 warnings, both for Linux-only GTK crates. `npm run sbom` writes `release/sbom-*.cdx.json`; it needs `cargo install cargo-cyclonedx`.
+- Lesson: when editing Rust or JS with Python heredocs, escape sequences such as `
+` and Windows paths get mangled. Use the Edit tool for those lines.
+- Drive C: on the laptop was down to 11 GB free (4%) on 2026-10-02.
+
 ## 2026-10-02 — 0.3.0: opt-in Check for updates (stage dcfd1ca)
 
 - Public repo **dharmsahu-hash/pcdoctor-releases** (created with the owner's OK) holds installers and release notes only; the source repo stays private. Its README is the customer download page.
