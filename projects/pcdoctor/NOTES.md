@@ -2,6 +2,19 @@
 
 Newest first. Decisions not yet recorded in code (there is no code yet).
 
+## 2026-10-02 — 0.2.1: smarter AI answers (stage 013cd9a)
+
+- With Qwen3.5 4B, a fixed format ("one sentence, then up to 3 steps") made every answer padded and generic. What worked:
+  - Steps only when the person must act, with one example of an action answer in the prompt.
+  - Short examples for simple questions.
+  - General knowledge allowed for general questions.
+  - "Never mention the notes, never offer to act, never end with a question".
+  - Call the data "notes", not "PC FACTS"; it echoed the label back.
+- Basic facts were missing (Windows version, PCDoctor version, processor). Windows 11 still reports "Windows 10" in ProductName, so build 22000 or higher decides.
+- The regression harness is `ai_end_to_end_on_this_pc`, which asks the owner's real 10 questions. It backs up and restores `conversation.json`, because it clears the history.
+- An old conversation full of bad answers can make the model copy that style (last 6 turns go into the prompt), so tell testers to press Clear conversation after prompt changes.
+- Update-check feature was started and then paused for this; the main repo is private, so release checks need a public releases location (owner decision).
+
 ## 2026-10-02 — 0.2.0: About screen and safe updates (stage b27a5e9)
 
 - Updates: customers run the new installer over the old one. The app lives in `%LOCALAPPDATA%\PCDoctor` and the data in `%LOCALAPPDATA%\com.knowledgewala.pcdoctor`. Tauri's NSIS installer deletes data only on uninstall with "Delete the application data" ticked, and never with /UPDATE.
