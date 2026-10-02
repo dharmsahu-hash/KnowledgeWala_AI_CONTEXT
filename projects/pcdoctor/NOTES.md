@@ -2,6 +2,13 @@
 
 Newest first. Decisions not yet recorded in code (there is no code yet).
 
+## 2026-10-02 — 0.3.0: opt-in Check for updates (stage dcfd1ca)
+
+- Public repo **dharmsahu-hash/pcdoctor-releases** (created with the owner's OK) holds installers and release notes only; the source repo stays private. Its README is the customer download page.
+- `update.rs` asks `api.github.com/repos/dharmsahu-hash/pcdoctor-releases/releases/latest`. It is off by default. Once switched on it checks at most once a day when the app opens, and Settings > Check now can check at any time. The request uses a fixed host, no redirects and the user agent `PCDoctor/<version>`; a 404 means nothing is published yet. The app never downloads an update itself: Download opens the releases page in the browser.
+- To publish a release, make the tag the version (`v0.3.0`), attach the setup .exe and write short plain notes, whose first lines show in the app. Drafts and pre-releases are ignored. No release has been published yet; the owner publishes them.
+- The setting and the last answer are kept in `update.json` next to the database.
+
 ## 2026-10-02 — 0.2.1: smarter AI answers (stage 013cd9a)
 
 - With Qwen3.5 4B, a fixed format ("one sentence, then up to 3 steps") made every answer padded and generic. What worked:
@@ -13,7 +20,6 @@ Newest first. Decisions not yet recorded in code (there is no code yet).
 - Basic facts were missing (Windows version, PCDoctor version, processor). Windows 11 still reports "Windows 10" in ProductName, so build 22000 or higher decides.
 - The regression harness is `ai_end_to_end_on_this_pc`, which asks the owner's real 10 questions. It backs up and restores `conversation.json`, because it clears the history.
 - An old conversation full of bad answers can make the model copy that style (last 6 turns go into the prompt), so tell testers to press Clear conversation after prompt changes.
-- Update-check feature was started and then paused for this; the main repo is private, so release checks need a public releases location (owner decision).
 
 ## 2026-10-02 — 0.2.0: About screen and safe updates (stage b27a5e9)
 
