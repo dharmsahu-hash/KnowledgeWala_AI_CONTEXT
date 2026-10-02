@@ -17,6 +17,14 @@ Shared memory for AI coding agents (Claude Code, Cursor, and others) that work o
 | TeacherCircle | https://github.com/dharmsahu-hash/teachercircle | https://teachercircle.vercel.app |
 | KnowledgeWala Exam | not yet created (local: `repos\knowledgewala-exam`) | not deployed (G2 design stage) |
 
+## Agents
+
+Reusable agents (Claude skills) that are not tied to one project. Each lives under `agents/<name>/` with a `SKILL.md` (the instructions) and a `README.md` (how to use).
+
+| Agent | What it does |
+|---|---|
+| [`learning-notes`](agents/learning-notes/) | Reads a video (YouTube, lecture, transcript) or document (PDF, DOCX, PPT, article) and writes a Markdown learning-notes file for interviews, exams, day-to-day work and hands-on practice |
+
 ## Keeping it in sync
 
 `CONTEXT.md` and `AGENTS.md` are copies of `docs/ai/CONTEXT.md` and `AGENTS.md` in the project repo. Edit the project repo first, then copy the files here. `NOTES.md` lives only here.
