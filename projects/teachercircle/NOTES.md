@@ -2,6 +2,13 @@
 
 Newest first. Facts that the code and `CONTEXT.md` do not already record.
 
+## 2026-10-02 — #1 "I need a tutor" posts shipped to stage; outage fix
+
+- `65a82c4` (migration **0028**): `/tutor-requests`, `/tutor-requests/new`, `/tutor-requests/<slug>-<id>`, `/admin/requests`. Owner decisions held: signed-in poster only, 60-day expiry, replies via in-app messages, no public contact details. **Apply `0028` to production Supabase** (then `NOTIFY pgrst, 'reload schema';`). Until then the pages show "being set up".
+- Outage on 2026-10-02: `0027` code reached `main` before the migration, so `/search` and teacher pages returned 500 and the directory was empty. Fixed by `0b8ce21` (`lib/teacherPublic.ts` falls back to the old columns). Lesson, now in AGENTS.md: new columns on hot read paths need a fallback, or apply the migration before merging. Production now has `0026` and `0027` applied.
+- Local test DB gotcha: this database grants new tables broad default privileges, so new tables should `revoke all` explicitly (0028 does).
+- Claude Code blocks me from merging to `main` ("Merge Without Review"). The owner merges the Stage ---> Main PR.
+
 ## 2026-10-02 — #2/#3 shipped to stage; production deploy order
 
 - `11db050`: teaching mode, classes, boards, exams (migration **0027**) plus `/tutors/online`, `/tutors/exam/<exam>[/<subject>]` and `/tutors/<city>/<subject>/class-<n>`. `14e071e`: readability (Inter font, darker `--muted`, minimum 13px).
