@@ -2,6 +2,14 @@
 
 Newest first. Facts that the code and `CONTEXT.md` do not already record.
 
+## 2026-10-02 — Cost fixes and TeacherCircle Daily shipped to stage (owner is on Vercel Hobby)
+
+- `f85c8fe` cached shared directory reads (5 min in prod, 0 elsewhere; `DIRECTORY_CACHE_SECONDS` overrides) + daily keep-alive workflow. After the PR merges set the repo variable `SITE_URL` to the custom domain. `7ef84d0` TeacherCircle Daily (`/daily`): computed Maths quizzes, streaks, share picture, migration **0029** (apply to Supabase; pages work without it).
+- **Vercel Hobby is non-commercial and the site shows AdSense, so Vercel's terms point to Pro ($20/user/month).** Owner is on the free plan. Compare cheaper hosts (the Dockerfile builds a standalone image) as a separate task.
+- Windows gotcha: `next/og` ImageResponse on the Node runtime crashes (broken font path); keep `/daily/og` on `runtime = "edge"`.
+- Shell gotcha for future sessions: backslashes get stripped when JS is passed through `node -e` in single quotes (a regex `d` became `d`). Write such code with the file tools, and test regexes.
+- Next on the roadmap: free browser push alerts (installable PWA) and a daily teacher digest (one email a day, within Brevo's 300/day), free-demo badge, shareable teacher card.
+
 ## 2026-10-02 — Competitor research and growth roadmap v2 (owner asked for features that bring users back)
 
 Compared UrbanPro, Superprof, Preply, Wyzant, Doubtnut/Vedantu, Testbook. Findings: UrbanPro is pay-to-contact (coins) and tutors report many fake/unresponsive leads (user-reported on review sites); Superprof is free for tutors, pushes a free first lesson and a Super Tutor badge; Wyzant ranks by profile completeness + response rate + review count; Doubtnut wins daily habit with free doubt solving (most users outside the top 10 cities); Testbook/SATHEE use free mocks and exam countdowns; WhatsApp is the main channel for tutors and parents in India, and word of mouth is how most tutors get students. Our wedge: free for everyone, no coins, signed-in requests only.
