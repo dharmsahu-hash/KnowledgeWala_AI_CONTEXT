@@ -2,6 +2,16 @@
 
 Newest first. Decisions not yet recorded in code (there is no code yet).
 
+## 2026-10-03 — 0.5.0 Explain + weekly card, 0.6.0 agent mode + action buttons (stage 6f04e0c)
+
+- 0.5.0 (b8ec4a6): explanations include the known_apps.json entry for any program they name. Without it, the 4B model called the NVIDIA Container "part of Docker".
+- 0.6.0 agent mode: Qwen3.5 4B on llama.cpp b11342 calls OpenAI-style tools reliably, with no extra flag (jinja templates are on by default). Tool calls arrive in the stream as `delta.tool_calls`, keyed by index, with the arguments split into pieces. The context window is now 6144 tokens. The prompt has to tell the model to use the tools for files, history and crashes; even so, it skipped `pc_history` until the tool description named drives explicitly.
+- Privacy line for tools: the AI gets file names, sizes, dates and drive letters, never folders. PRIVACY.md says so.
+- My Library's search box now requires every word, in any order. The AI tool uses the same search, so "Show these files" opens exactly what the AI saw.
+- **Incident:** on 2026-10-03 at about 00:45, `move-to-d.ps1 -Set tools` moved PCDoctor's data folder while a stopped test binary still had `pcdoctor.db` open. The first run stopped partway, the second finished, and the 10.9 MB database (history since 2026-10-01 and My Library's list) did not survive; a fresh 45 KB database exists. My Library was rebuilt (42,020 files). History restarts and the owner's own collections are gone.
+  - Fix: the script now checks that every file can be opened exclusively before moving anything.
+  - Lesson: never move or copy a live SQLite database; stop every process that uses it first and check for open files.
+
 ## 2026-10-03 — 0.4.1: Ask focus fix, hardware and live readings for the AI, readability (stage e74fbc5)
 
 - Ask box focus: a `disabled` input loses focus for good, so the box stays enabled; only Ask is blocked while an answer streams, and the box is refocused after each answer.
