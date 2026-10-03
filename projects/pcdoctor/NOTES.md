@@ -2,6 +2,20 @@
 
 Newest first. Decisions not yet recorded in code (there is no code yet).
 
+## 2026-10-04 — 0.7.0: optional "my own AI service" (stage 4739c8c)
+
+- The owner wants customers to choose a free or paid AI service, but the app must stay simple. So it is one Settings card: Built-in AI (default) or My own AI service, with service, key, model, a consent box and one Save and test button.
+- Claude goes through Anthropic's own Messages API as raw HTTP, because there is no Rust SDK and the claude-api skill says never to use OpenAI-compatibility shims.
+  - Default model `claude-opus-5-5`; effort `low` for chat; `fallbacks: "default"` with the beta header `server-side-fallback-2026-07-01`.
+  - Thinking blocks are echoed back unchanged (kept as `_native` on the assistant message).
+  - `temperature` is not sent: Opus 5.5 rejects it.
+- Other services use the OpenAI-compatible format with `cache_prompt`, `chat_template_kwargs` and `temperature` stripped (some reasoning models reject temperature).
+- Keys are stored with the `keyring` 3 crate (windows-native) in Windows Credential Manager under "PCDoctor online AI".
+- llama-server is itself OpenAI-compatible, so the real-PC test runs the whole own-service path against it as a "custom" service: no keys and no internet needed.
+- When `npm audit` failed in CI (0.5.0 and 0.6.0, not noticed at the time), the cause was a new advisory reaching the project only through @cyclonedx/cyclonedx-npm. That tool is now fetched with npx at release time instead of being a dev dependency. Always watch CI after pushing.
+- npm's cache now lives at `D:\projects\Claude_AI_Project\dev-tools
+pm-cache` (the owner's D: rule).
+
 ## 2026-10-03 — 0.5.0 Explain + weekly card, 0.6.0 agent mode + action buttons (stage 6f04e0c)
 
 - 0.5.0 (b8ec4a6): explanations include the known_apps.json entry for any program they name. Without it, the 4B model called the NVIDIA Container "part of Docker".
